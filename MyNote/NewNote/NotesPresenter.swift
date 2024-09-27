@@ -20,10 +20,10 @@ protocol NotesPresenterProtocol{
     func NotesData(result: [NoteInfo])
     func detailNote(_ note: NoteInfo)
     func addNewNote()
+    func deleteNote(_ note: NoteInfo)
 }
 
 class NotesPresenter: NotesPresenterProtocol{
-
     var view: NotesViewProtocol?
     var interactor: NotesInteractorProtocol?
     
@@ -57,5 +57,12 @@ class NotesPresenter: NotesPresenterProtocol{
     func addNewNote() {
         router?.goToNewNote()
     }
+    
+    func deleteNote(_ note: NoteInfo) {
+        interactor?.deleteNote(note: note)
+    }
+    
+
+
     
 }
