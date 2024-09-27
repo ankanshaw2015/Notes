@@ -102,5 +102,14 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         presenter?.detailNote(myNote[indexPath.row])
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "delete", handler: { [self]action,view,handler in
+            let note = self.myNote[indexPath.row]
+            self.presenter?.deleteNote(note)
+        }
+        )
+        let confure = UISwipeActionsConfiguration(actions: [action])
+        return confure
+    }
     
 }

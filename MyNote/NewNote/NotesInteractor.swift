@@ -14,12 +14,14 @@ protocol NotesInteractorProtocol{
     var myNote:NotesData?{get set}
     
     func getNoteData(id:Users)
-  //  func gotNewNot()
+    func deleteNote(note:NoteInfo)
     
     
 }
 
 class NotesInteractor: NotesInteractorProtocol{
+   
+    
     var myNote: NotesData?
     
     var presenter: NotesPresenterProtocol?
@@ -49,13 +51,7 @@ class NotesInteractor: NotesInteractorProtocol{
         }
         
         else{
-            let data = fetchData()
-            if data.count != 0{
-                self.presenter?.NotesData(result: data)
-            }
-            else{
-                print("there is no note")
-            }
+                data()
             
         }
     }
@@ -72,6 +68,25 @@ class NotesInteractor: NotesInteractorProtocol{
         return items
     }
     
-   
+    func deleteNote(note: NoteInfo) {
+        context.delete(note)
+        do{
+            try self.context.save()
+        }
+        catch{
+            
+        }
+        data()
+    }
+    
+    func data(){
+        let data = fetchData()
+        if data.count != 0{
+            self.presenter?.NotesData(result: data)
+        }
+        else{
+            print("there is no note")
+        }
+    }
     
 }

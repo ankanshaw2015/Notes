@@ -15,6 +15,7 @@ protocol CompleteNotePresenterProtocol{
     
     func viewDidLoad()
     func updateData(note:NotesData?)
+    
 }
 
 class CompleteNotePresenter: CompleteNotePresenterProtocol{
