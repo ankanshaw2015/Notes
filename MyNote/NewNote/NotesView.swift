@@ -12,6 +12,7 @@ protocol NotesViewProtocol{
     var presenter: NotesPresenterProtocol? { get set }
     
     func update(with notes: [NoteInfo])
+    func noData(with error: String)
   
     
 }
@@ -47,23 +48,40 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
     //***********************************
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        title = "My Notes"
         presenter?.viewDidLoad()
-        view.addSubview(table)
-        view.addSubview(label)
+        view.backgroundColor = .yellow
         table.dataSource = self
         table.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
         align()
     }
     
-    func align(){
-        table.frame = view.bounds
-        label.frame = CGRect(x: 0,
-                             y: 100,
-                             width: view.frame.size.width,
-                             height: 80)
-    
+    private func align() {
+        // Add the table view and label to the main view
+        view.addSubview(table)
+        view.addSubview(label)
+        table.backgroundColor = .yellow
+        table.tintColor = .lightGray
+        table.tintColor = .darkGray
+      
+        
+        label.textColor = .lightGray
+        // Set up constraints for the table view
+        table.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            table.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            table.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -10),
+            table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10)
+        ])
+
+        // Set up constraints for the label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)// Fixed height of 80 points
+        ])
     }
     
     func update(with notes: [NoteInfo]) {
@@ -81,8 +99,11 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
        print("bar tap buttom tapped")
     }
     
-    func update(with error: String) {
-        print("error occured")
+    func noData(with error: String) {
+        
+        self.label.isHidden = false
+        self.label.text = error
+        self.table.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,6 +116,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         content.text = myNote[indexPath.row].noteTitle
         content.secondaryText = myNote[indexPath.row].noteData
         cell.contentConfiguration = content
+        cell.contentView.backgroundColor = UIColor.systemYellow
         return cell
     }
     

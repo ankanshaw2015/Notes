@@ -43,9 +43,10 @@ class NotesPresenter: NotesPresenterProtocol{
             view?.update(with: result)
                     }
         else{
-            print("error")
+            view?.noData(with: "no notes yet")
         }
     }
+    
     
     func detailNote(_ note: NoteInfo) {
         let title:String = note.noteTitle!
