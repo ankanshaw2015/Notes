@@ -31,6 +31,7 @@ class NewNoteViewController:UIViewController,NewNoteViewProtocol{
          Field.leftViewMode = .always
         Field.isHidden = false
         Field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+        Field.backgroundColor = .systemYellow
          return Field
      }()
     
@@ -40,15 +41,15 @@ class NewNoteViewController:UIViewController,NewNoteViewProtocol{
         
         Field.autocapitalizationType = .words
          Field.layer.borderWidth = 1
-        Field.layer.borderColor = UIColor.gray.cgColor
-        Field.backgroundColor = .gray
+        Field.layer.borderColor = UIColor.systemYellow.cgColor
+        Field.backgroundColor = .systemYellow
         Field.isHidden = false
          return Field
      }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .yellow
         view.addSubview(textView)
         view.addSubview(noteView)
         align()
@@ -56,11 +57,24 @@ class NewNoteViewController:UIViewController,NewNoteViewProtocol{
     }
     
     func align(){
-        textView.frame = CGRect(x: 0,
-                             y: 100,
-                             width: view.frame.size.width,
-                             height: 80)
-        noteView.frame = CGRect(x: 0, y: 200, width: view.frame.size.width, height: 580)
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.topAnchor , constant: 120),
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
+            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            //textView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
+            textView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        noteView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noteView.topAnchor.constraint(equalTo: textView.bottomAnchor , constant: 20),
+            noteView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
+            noteView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            noteView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
+        ])
+
      
     }
     

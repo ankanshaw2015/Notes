@@ -85,7 +85,7 @@ class NotesInteractor: NotesInteractorProtocol{
             self.presenter?.NotesData(result: data)
         }
         else{
-            print("there is no note")
+            self.presenter?.NotesData(result: data)
         }
     }
     
