@@ -74,6 +74,19 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         collectionView.delegate = self
         collectionView.dataSource = self
        // navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+//
+//
+//        let gridIcon = UIImage(named: "grid")
+//
+//        let button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
+//        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
+//
+//
+//           navigationItem.rightBarButtonItems = [addButton, button,refresh]
+        align()
+    }
+    override func viewDidAppear(_ animated: Bool) {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
            
            // Create the grid or list button
@@ -81,18 +94,31 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         
         let button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
-           
-           // Set both buttons in the right bar button items
-           navigationItem.rightBarButtonItems = [addButton, button,refresh]
-        align()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        
+        navigationItem.rightBarButtonItems = [addButton, button,refresh]
+        print("buttons are loading")
     }
     
     @objc func refreshTapped(){
-        table.reloadData()
-        collectionView.reloadData()
+//        table.reloadData()
+//        collectionView.reloadData()
+        let router = LogInRouter.routing()
+        let entryViewController = router.entry // Replace with your actual entry view controller class
+
+           // Get the SceneDelegate
+           if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+               // Access the window safely
+               if let window = sceneDelegate.window {
+                   // Set the root view controller
+                   window.rootViewController = entryViewController
+                   
+                   // Optionally add a transition animation
+                   UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                       window.rootViewController = entryViewController
+                   }, completion: nil)
+                   
+                   window.makeKeyAndVisible()
+               }
+           }
     }
     
     @objc func toggle() {
