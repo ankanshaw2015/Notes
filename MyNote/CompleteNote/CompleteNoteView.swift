@@ -11,21 +11,13 @@ import UIKit
 protocol CompleteNoteViewProtocol{
     var presenter: CompleteNotePresenterProtocol?{get set}
         
-    func update(with note:NotesData)
+   // func update(with note:NotesData)
+    func update(with note:NoteInfo)
 }
 
 class CompleteNoteViewController: UIViewController,CompleteNoteViewProtocol{
     var presenter: CompleteNotePresenterProtocol?
     
-    
-//    let stackView:UIStackView = {
-//        let stackView = UIStackView(arrangedSubviews: [label])
-//        stackView.axis = .vertical // Stack vertically
-//        stackView.spacing = 10 // Space between items
-//        stackView.alignment = .center // Center align items
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        return stackView
-//    }()
     
     private let label: UILabel = {
         
@@ -37,7 +29,7 @@ class CompleteNoteViewController: UIViewController,CompleteNoteViewProtocol{
         return label
     }()
     
-    private let text: UITextView = {
+    private var text: UITextView = {
         
         let label = UITextView()
         label.textAlignment = .left
@@ -49,16 +41,32 @@ class CompleteNoteViewController: UIViewController,CompleteNoteViewProtocol{
     }()
     
     
-
+    var editable = true
     
     //***********************************
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemYellow
         presenter?.viewDidLoad()
+        let edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
+        navigationItem.rightBarButtonItems = [edit]
 
         align()
         
+    }
+    
+    @objc func editButtonTapped(){
+        if editable{
+            navigationItem.rightBarButtonItems![0] = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(editButtonTapped))
+            text.isEditable = true
+            text.becomeFirstResponder() 
+            editable = false
+        }else{
+            navigationItem.rightBarButtonItems![0] = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
+            presenter?.editing(text: text.text)
+            text.isEditable = false
+            editable = true
+        }
     }
     
     
@@ -82,9 +90,9 @@ class CompleteNoteViewController: UIViewController,CompleteNoteViewProtocol{
      
     }
     
-    func update(with note: NotesData) {
+    func update(with note: NoteInfo) {
         label.text = note.noteTitle
-        text.text = note.noteInfo
+        text.text = note.noteData
     }
     
 

@@ -8,13 +8,13 @@
 import Foundation
 protocol CompleteNoteRouterProtocol{
     var entry:CompleteNoteViewController? { get set }
-    static func noteDetail(note:NotesData) -> CompleteNoteRouterProtocol
+    static func noteDetail(note:NoteInfo) -> CompleteNoteRouterProtocol
 }
 
 class CompleteNoteRouter : CompleteNoteRouterProtocol{
     var entry: CompleteNoteViewController?
     
-    static func noteDetail(note: NotesData) -> CompleteNoteRouterProtocol {
+    static func noteDetail(note: NoteInfo) -> CompleteNoteRouterProtocol {
         let router = CompleteNoteRouter()
         
         let view = CompleteNoteViewController()
