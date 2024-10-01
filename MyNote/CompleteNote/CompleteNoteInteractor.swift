@@ -8,20 +8,34 @@
 import Foundation
 protocol CompleteNoteInteractorProtocol{
     var presenter : CompleteNotePresenterProtocol?{get set}
-    var note : NotesData?{get set}
+    var note : NoteInfo?{get set}
     
+    func addEditedText()
     func getNote()
 }
 
 class CompleteNoteInteractor:CompleteNoteInteractorProtocol{
+   
+    let context = CoreDataStack.shared.context
+    
     var presenter: CompleteNotePresenterProtocol?
     
-    var note: NotesData?
+    var note: NoteInfo?
     
+//    func getNote() {
+//        presenter?.updateData(note: note)
+//        print(note?.noteInfo ?? "no value found")
+//    }
     func getNote() {
         presenter?.updateData(note: note)
-        print(note?.noteInfo ?? "no value found")
     }
     
+    func addEditedText() {
+        do{
+            try self.context.save()
+        }catch{
+            
+        }
+    }
     
 }

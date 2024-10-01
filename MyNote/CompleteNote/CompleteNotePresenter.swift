@@ -14,11 +14,13 @@ protocol CompleteNotePresenterProtocol{
     var router : CompleteNoteRouterProtocol?{get set}
     
     func viewDidLoad()
-    func updateData(note:NotesData?)
+    func updateData(note:NoteInfo?)
+    func editing(text:String)
     
 }
 
 class CompleteNotePresenter: CompleteNotePresenterProtocol{
+
     var view: CompleteNoteViewProtocol?
     
     var interactor: CompleteNoteInteractorProtocol?
@@ -29,15 +31,21 @@ class CompleteNotePresenter: CompleteNotePresenterProtocol{
         interactor?.getNote()
     }
     
-    func updateData(note: NotesData?) {
+    func updateData(note: NoteInfo?) {
         if let note = note{
             view?.update(with: note)
-            print(note.noteTitle," found data")
+           // print(note.noteTitle," found data")
         }else {
             print("error occurd when fetching")
         }
         
     }
+    func editing(text:String) {
+        interactor?.note?.noteData = text
+        interactor?.getNote()
+        interactor?.addEditedText()
+    }
+    
     
     
 }

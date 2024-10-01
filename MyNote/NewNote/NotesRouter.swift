@@ -15,13 +15,14 @@ protocol NotesRouterProtocol{
     
     static func startExecution() -> NotesRouterProtocol
     
-    func goToDetail(note:NotesData)
+   // func goToDetail(note:NotesData)
+    func goToDetail(note:NoteInfo)
     func goToNewNote()
     func backToNote(_ notes:NotesData)
 }
 class NotesRouter:NotesRouterProtocol{
-
     
+
     static var routers: NotesRouterProtocol?
     
     
@@ -49,7 +50,8 @@ class NotesRouter:NotesRouterProtocol{
         return router
     }
     
-    func goToDetail(note: NotesData) {
+   // func goToDetail(note: NotesData) {
+    func goToDetail(note: NoteInfo){
         let detailRouter = CompleteNoteRouter.noteDetail(note: note)
         guard let detailView = detailRouter.entry else {return}
         guard let viewController = self.entry else{return}

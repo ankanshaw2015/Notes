@@ -49,10 +49,10 @@ class NotesPresenter: NotesPresenterProtocol{
     
     
     func detailNote(_ note: NoteInfo) {
-        let title:String = note.noteTitle!
-        let note:String = note.noteData!
-        let data = MyNote.NotesData(noteTitle: title, noteInfo: note)
-        router?.goToDetail(note: data)
+//        let title:String = note.noteTitle!
+//        let note:String = note.noteData!
+//        let data = MyNote.NotesData(noteTitle: title, noteInfo: note)
+        router?.goToDetail(note: note)
     }
     
     func addNewNote() {
