@@ -13,12 +13,20 @@ protocol NotesViewProtocol{
     
     func update(with notes: [NoteInfo])
     func noData(with error: String)
-  
+    func profile()
+    func about()
     
 }
 
 class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDelegate,UITableViewDataSource{
-
+    
+    var slideMenu:SlideMenuView?
+    var isMenuOpen = false
+    let searchBar = UISearchBar()
+    var filteredNotes:[NoteInfo] = []
+    var isSearch = false
+    
+    let text = UITextView()
     let collectionView :UICollectionView = {
         let layout = UICollectionViewFlowLayout()
             // Set item size, spacing, etc. (customize as needed)
@@ -73,6 +81,8 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         collectionView.reloadData()
         collectionView.delegate = self
         collectionView.dataSource = self
+        setSearchBar()
+        text.isHidden = true
        // navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
 //        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
 //
@@ -85,41 +95,110 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
 //
 //           navigationItem.rightBarButtonItems = [addButton, button,refresh]
         align()
+       // setupTapGesture()
     }
+    var addButton = UIBarButtonItem()
+    var button = UIBarButtonItem()
+    var slideButton = UIBarButtonItem()
     override func viewDidAppear(_ animated: Bool) {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
-           
+         addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+        
            // Create the grid or list button
         let gridIcon = UIImage(named: "grid")
         
-        let button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
-        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
-        navigationItem.rightBarButtonItems = [addButton, button,refresh]
+        button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
+       // let signOut = UIBarButtonItem(title: "grid", style: .plain, target: self, action: #selector(signUpTapped))
+        
+         slideButton = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(slideButtonTapped))
+        
+      //  let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
+        navigationItem.rightBarButtonItems = [addButton, button,slideButton]
         print("buttons are loading")
     }
     
-    @objc func refreshTapped(){
-//        table.reloadData()
-//        collectionView.reloadData()
-        let router = LogInRouter.routing()
-        let entryViewController = router.entry // Replace with your actual entry view controller class
+    @objc func slideButtonTapped(){
 
-           // Get the SceneDelegate
-           if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-               // Access the window safely
-               if let window = sceneDelegate.window {
-                   // Set the root view controller
-                   window.rootViewController = entryViewController
-                   
-                   // Optionally add a transition animation
-                   UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                       window.rootViewController = entryViewController
-                   }, completion: nil)
-                   
-                   window.makeKeyAndVisible()
-               }
-           }
+        let slideMenu = self.slideMenu!
+        addChild(slideMenu)
+        view.addSubview(slideMenu.view)
+        
+        if !isMenuOpen{
+            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, animations: {
+                self.slideMenu!.view.frame = CGRect(x: 0, y: 0, width: 250, height: self.view.frame.height)
+            })
+            slideMenu.didMove(toParent: self)
+            isMenuOpen = true
+        }
+        else{
+           
+            UIView.animate(withDuration: 0.8, delay: 0.3, options: [.curveEaseInOut], animations: {
+
+                self.slideMenu?.view.alpha = 0.0
+                if let slideMenuFrame = self.slideMenu?.view.frame {
+                    self.slideMenu!.view.frame = CGRect(x: -slideMenuFrame.width, y: 0, width: slideMenuFrame.width, height: slideMenuFrame.height)
+                }
+            }, completion: { finished in
+
+                self.slideMenu?.view.alpha = 1.0 // Reset alpha if needed
+            })
+            slideMenu.didMove(toParent: self)
+            
+            print("menu closed")
+            isMenuOpen = false
+        }
+        
     }
+    
+    func about(){
+        table.isHidden = true
+        collectionView.isHidden = true
+        button.isHidden = true
+        addButton.isHidden = true
+        //.backgroundColor = .systemBlue
+        searchBar.isHidden = true
+        text.isHidden = false
+        navigationItem.leftBarButtonItem = slideButton
+        isMenuOpen = false
+        
+        UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
+            self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
+           // slideMenu.view.removeFromSuperview()
+        })
+    }
+    
+    func profile(){
+        table.isHidden = false
+       // collectionView.isHidden = false
+        button.isHidden = false
+        addButton.isHidden = false
+        view.backgroundColor = .yellow
+        searchBar.isHidden = false
+        text.isHidden = true
+        isMenuOpen = false
+        UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
+            self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
+           // slideMenu.view.removeFromSuperview()
+        })
+    }
+//    func setupTapGesture() {
+//
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+//        view.addGestureRecognizer(tapGesture)
+//    }
+//
+//
+//    @objc func handleBackgroundTap() {
+//        if isMenuOpen {
+//
+//            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, animations: {
+//                self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
+//            })
+//
+            
+//            print("menu closed")
+//            isMenuOpen = false
+//        }
+//    }
     
     @objc func toggle() {
             if table.isHidden {
@@ -142,7 +221,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
 
            table.translatesAutoresizingMaskIntoConstraints = false
            NSLayoutConstraint.activate([
-               table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+               table.topAnchor.constraint(equalTo: searchBar.bottomAnchor,constant: 5),
                table.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                table.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -150,7 +229,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
 
            collectionView.translatesAutoresizingMaskIntoConstraints = false
            NSLayoutConstraint.activate([
-               collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5),
                collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -162,8 +241,19 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
                label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
            ])
 
-           // Initially hide the table view
+          
            table.isHidden = true
+           
+           text.translatesAutoresizingMaskIntoConstraints = false
+           text.backgroundColor = .systemBlue
+           text.text = "achha app hai"
+           view.addSubview(text)
+           NSLayoutConstraint.activate([
+            text.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+               text.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+               text.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+               text.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+           ])
        }
        
     
@@ -173,6 +263,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
             self.label.isHidden = true
             self.table.reloadData()
             self.collectionView.reloadData()
+            
            
         }
         
@@ -187,17 +278,18 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         self.label.isHidden = false
         self.label.text = error
         self.table.isHidden = true
+        self.collectionView.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myNote.count
+        return isSearch ? filteredNotes.count : myNote.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         var content = cell.defaultContentConfiguration()
-        content.text = myNote[indexPath.row].noteTitle
-        content.secondaryText = myNote[indexPath.row].noteData
+        content.text = isSearch ? filteredNotes[indexPath.row].noteTitle : myNote[indexPath.row].noteTitle
+        content.secondaryText =  isSearch ? filteredNotes[indexPath.row].noteData : myNote[indexPath.row].noteData
         cell.contentConfiguration = content
         cell.contentView.backgroundColor = UIColor.systemYellow
         return cell
@@ -225,12 +317,12 @@ extension MyNotesViewController:UICollectionViewDelegate, UICollectionViewDataSo
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myNote.count
+        return isSearch ? filteredNotes.count : myNote.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! noteCell
-       let noteItem = myNote[indexPath.item]
+       let noteItem = isSearch ? filteredNotes[indexPath.item] : myNote[indexPath.item]
         cell.note = noteItem
         cell.backgroundColor = .yellow
         cell.button.tag = indexPath.item // Tag the button with the index
@@ -357,5 +449,39 @@ class noteCell:UICollectionViewCell{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension MyNotesViewController:UISearchBarDelegate{
+  
+    func setSearchBar(){
+        searchBar.placeholder = "search note"
+        searchBar.delegate = self
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.backgroundColor = .yellow
+        view.addSubview(searchBar)
+        
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            searchBar.leftAnchor.constraint(equalTo: view.leadingAnchor),
+//            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.widthAnchor.constraint(equalToConstant: view.frame.width),
+            searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty{
+            isSearch = false
+            filteredNotes.removeAll()
+            table.reloadData()
+            collectionView.reloadData()
+        }else{
+            isSearch = true
+            filteredNotes = myNote.filter{
+               return $0.noteTitle!.lowercased().contains(searchText.lowercased())
+            }
+            table.reloadData()
+            collectionView.reloadData()
+        }
     }
 }

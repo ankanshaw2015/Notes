@@ -7,8 +7,13 @@
 
 import Foundation
 import UIKit
+protocol SignUp{
+    var a:String?{get set}
+}
 
-class SignUp:UIViewController{
+class SignUpView:UIViewController,SignUp{
+    var a: String?
+    
     var presenter: LogInPresenterProtocol?
     
 //    private let lebal:UILabel = {
@@ -24,6 +29,7 @@ class SignUp:UIViewController{
         email.backgroundColor = .yellow
         email.placeholder = "@gmail.com"
         email.layer.cornerRadius = 10
+        email.layer.borderWidth = 2
         email.borderStyle = .roundedRect
         return email
     }()
@@ -34,7 +40,7 @@ class SignUp:UIViewController{
         pass.placeholder = "******"
         pass.layer.cornerRadius = 10
         pass.borderStyle = .roundedRect
-        
+        pass.layer.borderWidth = 2
         pass.isSecureTextEntry = true
         return pass
     }()
@@ -45,7 +51,7 @@ class SignUp:UIViewController{
         pass.placeholder = "******"
         pass.layer.cornerRadius = 10
         pass.borderStyle = .roundedRect
-        
+        pass.layer.borderWidth = 2
         pass.isSecureTextEntry = true
         return pass
     }()
@@ -65,6 +71,7 @@ class SignUp:UIViewController{
          button.setTitle("Sign Up", for: .normal)
         button.backgroundColor = .yellow
         button.layer.cornerRadius = 10
+        button.layer.borderWidth = 2
          return button
      }()
     
@@ -82,6 +89,7 @@ class SignUp:UIViewController{
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
        // loginButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         align()
+        print("sig up loaded")
     }
     
     private func align(){
@@ -114,7 +122,13 @@ class SignUp:UIViewController{
     }
     
     @objc func signUpButtonTapped(){
-        
+        print("sign Up")
+        guard let email = email.text,let password1 = password1.text,let password2 = password2.text, !email.isEmpty,!password1.isEmpty,!password2.isEmpty else{return}
+        self.presenter?.signUpData(email: email, password: password1)
+        self.email.text = ""
+        self.password1.text = ""
+        self.password2.text = ""
+       print(a ?? "none")
     }
     
     

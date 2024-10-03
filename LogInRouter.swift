@@ -12,7 +12,7 @@ protocol LogInRouterProtocol{
     var entry:LogInView?{get set}
     
     static func routing() -> LogInRouterProtocol
-    func loggedIn()
+    func loggedIn(email:String)
     func signUp()
     
 }
@@ -32,14 +32,16 @@ class LogInRouter:LogInRouterProtocol{
         presenter.router = router
         
         interactor.presenter = presenter
-        
+    
         router.entry = view
         return router
     }
     
-    func loggedIn() {
-        let router = NotesRouter.startExecution()
-        let entryViewController = router.entry // Replace with your actual entry view controller class
+    func loggedIn(email:String) {
+        let router = NotesRouter.startExecution(email: email)
+        let entryViewController = router.entry
+      
+        
         let navigation = UINavigationController(rootViewController: entryViewController!)
            // Get the SceneDelegate
            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
@@ -55,15 +57,19 @@ class LogInRouter:LogInRouterProtocol{
                    
                    window.makeKeyAndVisible()
                }
+               print("email")
            }
         print("router")
     }
     
     func signUp() {
-        let router = SignUp()
+        let router = SignUpView()
         
+        router.a = "data"
+        router.presenter = self.entry?.presenter
         let viewController = self.entry
         viewController?.navigationController?.pushViewController(router, animated: true)
+        print("router sign up")
     }
     
     

@@ -12,36 +12,41 @@ protocol NotesRouterProtocol{
     var entry: MyNotesViewController?{get }
     var presenter:NotesPresenterProtocol? { get set }
     static var routers:NotesRouterProtocol?{get set}
+   // var email:String? { get set }
     
-    static func startExecution() -> NotesRouterProtocol
-    
-   // func goToDetail(note:NotesData)
+    static func startExecution(email:String) -> NotesRouterProtocol
+
     func goToDetail(note:NoteInfo)
     func goToNewNote()
     func backToNote(_ notes:NotesData)
+    func goToLogIn()
 }
 class NotesRouter:NotesRouterProtocol{
     
-
+  //  var email:String?
     static var routers: NotesRouterProtocol?
     
     
     var entry: MyNotesViewController?
     var presenter:NotesPresenterProtocol?
     
-    static func startExecution() -> NotesRouterProtocol {
+    static func startExecution(email:String) -> NotesRouterProtocol {
         let router = NotesRouter()
         let presenter = NotesPresenter()
         let view = MyNotesViewController()
         let interactor = NotesInteractor()
+        let slideBar = SlideMenuView()
         
         view.presenter = presenter
+        view.slideMenu = slideBar
         
         presenter.view = view
         presenter.router = router
         presenter.interactor = interactor
         
         interactor.presenter = presenter
+        slideBar.present = presenter
+        slideBar.email = email
         
         router.presenter = presenter
         router.entry = view
@@ -71,5 +76,28 @@ class NotesRouter:NotesRouterProtocol{
         print("back to note view")
         
     }
+    func goToLogIn() {
+        let router = LogInRouter.routing()
+        
+        let entryViewController = router.entry // Replace with your actual entry view controller class
+
+         
+           if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+               // Access the window safely
+               if let window = sceneDelegate.window {
+                   // Set the root view controller
+                   window.rootViewController = entryViewController
+
+                   // Optionally add a transition animation
+                   UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                       window.rootViewController = entryViewController
+                   }, completion: nil)
+
+                   window.makeKeyAndVisible()
+               }
+           }
+        print("logout router")
+    }
+    
     
 }

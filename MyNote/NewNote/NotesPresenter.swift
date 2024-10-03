@@ -21,9 +21,14 @@ protocol NotesPresenterProtocol{
     func detailNote(_ note: NoteInfo)
     func addNewNote()
     func deleteNote(_ note: NoteInfo)
+    func goToSignUp()
+    func profileView()
+    func aboutView()
 }
 
 class NotesPresenter: NotesPresenterProtocol{
+
+    
     var view: NotesViewProtocol?
     var interactor: NotesInteractorProtocol?
     
@@ -63,7 +68,16 @@ class NotesPresenter: NotesPresenterProtocol{
         interactor?.deleteNote(note: note)
     }
     
-
-
+    func goToSignUp() {
+        router?.goToLogIn()
+        print("LogOut presenter")
+    }
+    func profileView() {
+        view?.profile()
+    }
+    
+    func aboutView() {
+        view?.about()
+    }
     
 }
