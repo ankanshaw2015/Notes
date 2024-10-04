@@ -10,7 +10,7 @@ import UIKit
 
 protocol LogInRouterProtocol{
     var entry:LogInView?{get set}
-    
+   // var signUpView:SignUpView?{get set}
     static func routing() -> LogInRouterProtocol
     func loggedIn(email:String)
     func signUp()
@@ -18,6 +18,8 @@ protocol LogInRouterProtocol{
 }
 
 class LogInRouter:LogInRouterProtocol{
+  //  var signUpView: SignUpView?
+    
     var entry: LogInView?
     
     static func routing() -> LogInRouterProtocol {
@@ -25,6 +27,9 @@ class LogInRouter:LogInRouterProtocol{
         let presenter = LogInPresenter()
         let interactor = LogInInteractor()
         let router = LogInRouter()
+//        let signUpView = SignUpView()
+//        signUpView.presenter = presenter
+//        signUpView.a = "ankan"
         
         view.presenter = presenter
         presenter.view = view
@@ -63,13 +68,19 @@ class LogInRouter:LogInRouterProtocol{
     }
     
     func signUp() {
-        let router = SignUpView()
-        
-        router.a = "data"
-        router.presenter = self.entry?.presenter
-        let viewController = self.entry
-        viewController?.navigationController?.pushViewController(router, animated: true)
-        print("router sign up")
+        let signUpView = SignUpView() // Create a new instance
+        signUpView.presenter = entry?.presenter // Set the presenter if needed
+            signUpView.a = "ankan" // Set any properties
+
+            let viewController = self.entry // This should be LogInView
+
+            // Ensure viewController is in a navigation controller before pushing
+            if let navController = viewController?.navigationController {
+                navController.pushViewController(signUpView, animated: true)
+            } else {
+                print("Navigation controller is nil.")
+            }
+            print("router sign up")
     }
     
     

@@ -21,6 +21,7 @@ class SlideMenuView: UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 0.08)
         print("side menu")
         setupMenu()
         setupTableView()
@@ -31,7 +32,7 @@ class SlideMenuView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
+        tableView.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1)
         
         
         view.addSubview(tableView)
@@ -47,7 +48,7 @@ class SlideMenuView: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func setupMenu() {
         view.addSubview(image)
         label.text = email
-        label.backgroundColor = .white
+        label.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1)
         
         view.addSubview(label)
         label.textAlignment = .center
@@ -63,6 +64,7 @@ class SlideMenuView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         ])
         
         image.image = UIImage(named: "user")
+        image.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1)
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -82,6 +84,7 @@ class SlideMenuView: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = menuItems[indexPath.row]
+        cell.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1)
         return cell
     }
 

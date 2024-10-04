@@ -30,8 +30,9 @@ class NewNoteViewController:UIViewController,NewNoteViewProtocol{
         Field.layer.borderColor = UIColor.gray.cgColor
          Field.leftViewMode = .always
         Field.isHidden = false
+        Field.layer.cornerRadius = 18
         Field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        Field.backgroundColor = .systemYellow
+        Field.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1.0)
          return Field
      }()
     
@@ -42,14 +43,15 @@ class NewNoteViewController:UIViewController,NewNoteViewProtocol{
         Field.autocapitalizationType = .words
          Field.layer.borderWidth = 1
         Field.layer.borderColor = UIColor.systemYellow.cgColor
-        Field.backgroundColor = .systemYellow
+        Field.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1.0)
         Field.isHidden = false
+        Field.layer.cornerRadius = 18
          return Field
      }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1.0)
         view.addSubview(textView)
         view.addSubview(noteView)
         align()

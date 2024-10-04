@@ -35,7 +35,8 @@ class CompleteNoteViewController: UIViewController,CompleteNoteViewProtocol{
         label.textAlignment = .left
         label.text = ""
         label.font = .systemFont(ofSize: 26, weight: .light)
-        label.backgroundColor = .yellow
+        label.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1.0)
+        label.layer.cornerRadius = 18
         label.isEditable = false
         return label
     }()
@@ -46,7 +47,7 @@ class CompleteNoteViewController: UIViewController,CompleteNoteViewProtocol{
     //***********************************
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1.0)
         presenter?.viewDidLoad()
         let edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonTapped))
         navigationItem.rightBarButtonItems = [edit]

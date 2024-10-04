@@ -87,7 +87,7 @@ class SignUpView:UIViewController,SignUp{
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.3)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
-       // loginButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        print("view loaded")
         align()
         print("sig up loaded")
     }

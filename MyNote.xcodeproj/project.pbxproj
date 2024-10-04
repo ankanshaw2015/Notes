@@ -35,6 +35,7 @@
 		047720912CABC3BB00780A31 /* LogInRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047720902CABC3BB00780A31 /* LogInRouter.swift */; };
 		047720932CABE29700780A31 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047720922CABE29700780A31 /* SignUpView.swift */; };
 		047720962CAC047100780A31 /* LogInEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047720952CAC047100780A31 /* LogInEntity.swift */; };
+		048429762CAEE9C400CA6AC7 /* MainNoteExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048429752CAEE9C400CA6AC7 /* MainNoteExtentions.swift */; };
 		04F271F92CAD681100CE5428 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F271F82CAD681100CE5428 /* SlideMenu.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		047720902CABC3BB00780A31 /* LogInRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRouter.swift; sourceTree = "<group>"; };
 		047720922CABE29700780A31 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		047720952CAC047100780A31 /* LogInEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInEntity.swift; sourceTree = "<group>"; };
+		048429752CAEE9C400CA6AC7 /* MainNoteExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoteExtentions.swift; sourceTree = "<group>"; };
 		04F271F82CAD681100CE5428 /* SlideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +149,7 @@
 				043B7FDC2CA5A16A0087A1EB /* NotesPresenter.swift */,
 				043B7FDB2CA5A16A0087A1EB /* NotesRouter.swift */,
 				043B7FDF2CA5A16B0087A1EB /* NotesView.swift */,
+				048429752CAEE9C400CA6AC7 /* MainNoteExtentions.swift */,
 				04F271F82CAD681100CE5428 /* SlideMenu.swift */,
 			);
 			name = MainNote;
@@ -274,6 +277,7 @@
 				043B7FB02CA59FE70087A1EB /* AppDelegate.swift in Sources */,
 				043B7FCD2CA5A08E0087A1EB /* CompleteNoteInteractor.swift in Sources */,
 				043B7FD82CA5A0B40087A1EB /* NewNotePresenter.swift in Sources */,
+				048429762CAEE9C400CA6AC7 /* MainNoteExtentions.swift in Sources */,
 				043B7FE12CA5A16B0087A1EB /* NotesPresenter.swift in Sources */,
 				04F271F92CAD681100CE5428 /* SlideMenu.swift in Sources */,
 				043B7FE82CA5A1E90087A1EB /* SceneDelegate.swift in Sources */,

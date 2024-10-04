@@ -25,15 +25,13 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
     let searchBar = UISearchBar()
     var filteredNotes:[NoteInfo] = []
     var isSearch = false
+    var addButton = UIBarButtonItem()
+    var button = UIBarButtonItem()
+    var slideButton = UIBarButtonItem()
     
     let text = UITextView()
     let collectionView :UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-            // Set item size, spacing, etc. (customize as needed)
-           // layout.itemSize = CGSize(width: 170, height: 600)
-        
-           // layout.minimumLineSpacing = 10
-           // layout.minimumInteritemSpacing = 10
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(noteCell.self, forCellWithReuseIdentifier: "cell")
@@ -47,8 +45,6 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         table.isHidden = true
-       // table.delegate = self
-       // table.dataSource = self
         return table
     }()
     
@@ -74,7 +70,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         super.viewDidLoad()
         navigationItem.title = "My Notes"
         presenter?.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.6, alpha: 1.0)
         table.dataSource = self
         table.delegate = self
         table.reloadData()
@@ -83,35 +79,21 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         collectionView.dataSource = self
         setSearchBar()
         text.isHidden = true
-       // navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
-//
-//
-//        let gridIcon = UIImage(named: "grid")
-//
-//        let button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
-//        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
-//
-//
-//           navigationItem.rightBarButtonItems = [addButton, button,refresh]
+    
         align()
-       // setupTapGesture()
     }
-    var addButton = UIBarButtonItem()
-    var button = UIBarButtonItem()
-    var slideButton = UIBarButtonItem()
+ 
     override func viewDidAppear(_ animated: Bool) {
-         addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
-        
-           // Create the grid or list button
+        addButton = UIBarButtonItem(image: UIImage(systemName: "note.text.badge.plus"), style: .plain, target: self, action: #selector(didTapAdd))
+
+        // addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+
         let gridIcon = UIImage(named: "grid")
         
         button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
-       // let signOut = UIBarButtonItem(title: "grid", style: .plain, target: self, action: #selector(signUpTapped))
         
-         slideButton = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(slideButtonTapped))
-        
-      //  let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTapped))
+        slideButton = UIBarButtonItem(image: UIImage(systemName: "list.star"), style: .plain, target: self, action: #selector(slideButtonTapped))
+ 
         navigationItem.rightBarButtonItems = [addButton, button,slideButton]
         print("buttons are loading")
     }
@@ -159,10 +141,12 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         text.isHidden = false
         navigationItem.leftBarButtonItem = slideButton
         isMenuOpen = false
-        
+        text.text = constant().texts
+        text.backgroundColor =  UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 0.6)
+        text.layer.cornerRadius = 18
+        text.font = .systemFont(ofSize: 26, weight: .light)
         UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
             self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
-           // slideMenu.view.removeFromSuperview()
         })
     }
     
@@ -177,28 +161,10 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         isMenuOpen = false
         UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
             self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
-           // slideMenu.view.removeFromSuperview()
+          
         })
     }
-//    func setupTapGesture() {
-//
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
-//        view.addGestureRecognizer(tapGesture)
-//    }
-//
-//
-//    @objc func handleBackgroundTap() {
-//        if isMenuOpen {
-//
-//            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, animations: {
-//                self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
-//            })
-//
-            
-//            print("menu closed")
-//            isMenuOpen = false
-//        }
-//    }
+
     
     @objc func toggle() {
             if table.isHidden {
@@ -219,6 +185,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
            view.addSubview(table)
            view.addSubview(label)
 
+           table.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1.0)
            table.translatesAutoresizingMaskIntoConstraints = false
            NSLayoutConstraint.activate([
                table.topAnchor.constraint(equalTo: searchBar.bottomAnchor,constant: 5),
@@ -227,6 +194,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
                table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
            ])
 
+           collectionView.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1.0)
            collectionView.translatesAutoresizingMaskIntoConstraints = false
            NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5),
@@ -291,7 +259,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         content.text = isSearch ? filteredNotes[indexPath.row].noteTitle : myNote[indexPath.row].noteTitle
         content.secondaryText =  isSearch ? filteredNotes[indexPath.row].noteData : myNote[indexPath.row].noteData
         cell.contentConfiguration = content
-        cell.contentView.backgroundColor = UIColor.systemYellow
+        cell.contentView.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1.0)
         return cell
     }
     
@@ -309,6 +277,12 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         return confure
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(100)
+    }
+    
+
+    
 }
 
 
@@ -324,7 +298,7 @@ extension MyNotesViewController:UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! noteCell
        let noteItem = isSearch ? filteredNotes[indexPath.item] : myNote[indexPath.item]
         cell.note = noteItem
-        cell.backgroundColor = .yellow
+        cell.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1.0)
         cell.button.tag = indexPath.item // Tag the button with the index
         cell.button.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
         return cell
@@ -401,7 +375,7 @@ class noteCell:UICollectionViewCell{
     }
     
     func setup(){
-        self.backgroundColor = .yellow
+        self.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 0.6)
         print("cell")
         constrain()
         shadow()
@@ -419,6 +393,7 @@ class noteCell:UICollectionViewCell{
             label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
         
+        text.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 0.3)
         text.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 5),
@@ -438,8 +413,8 @@ class noteCell:UICollectionViewCell{
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 2)
         self.layer.shadowOpacity = 1
-        self.layer.cornerRadius = 4
-        self.layer.shadowRadius = 1
+        self.layer.cornerRadius = 15
+        self.layer.shadowRadius = 4
         self.clipsToBounds = false
     }
     
@@ -458,7 +433,10 @@ extension MyNotesViewController:UISearchBarDelegate{
         searchBar.placeholder = "search note"
         searchBar.delegate = self
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.backgroundColor = .yellow
+        
+        UISearchBar.appearance().backgroundImage = UIImage() // This removes the default background
+        UISearchBar.appearance().barTintColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 0.6) // Set the bar tint color
+
         view.addSubview(searchBar)
         
         NSLayoutConstraint.activate([
@@ -469,6 +447,8 @@ extension MyNotesViewController:UISearchBarDelegate{
             searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty{
             isSearch = false

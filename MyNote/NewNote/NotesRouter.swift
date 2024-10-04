@@ -77,26 +77,30 @@ class NotesRouter:NotesRouterProtocol{
         
     }
     func goToLogIn() {
-        let router = LogInRouter.routing()
+
         
-        let entryViewController = router.entry // Replace with your actual entry view controller class
+        let router = LogInRouter.routing()
+            
+            let entryViewController = router.entry // This is your LogInView
 
-         
-           if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-               // Access the window safely
-               if let window = sceneDelegate.window {
-                   // Set the root view controller
-                   window.rootViewController = entryViewController
+            // Wrap the entryViewController in a navigation controller
+        let navigationController = UINavigationController(rootViewController: entryViewController!)
 
-                   // Optionally add a transition animation
-                   UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                       window.rootViewController = entryViewController
-                   }, completion: nil)
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                // Access the window safely
+                if let window = sceneDelegate.window {
+                    // Set the root view controller
+                    window.rootViewController = navigationController
 
-                   window.makeKeyAndVisible()
-               }
-           }
-        print("logout router")
+                    // Add a transition animation
+                    UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                        window.rootViewController = navigationController
+                    }, completion: nil)
+
+                    window.makeKeyAndVisible()
+                }
+            }
+            print("logout router")
     }
     
     
