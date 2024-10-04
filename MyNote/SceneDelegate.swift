@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-       // let router = NotesRouter.startExecution()
+       // let router = NotesRouter.startExecution(email: "user@gmail.com")
         let router = LogInRouter.routing()
         let initialViewControler = router.entry!
         

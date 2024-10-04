@@ -29,6 +29,8 @@ class LogInView:UIViewController,LogInViewProtocol{
     
     private let email:UITextField = {
         let email = UITextField()
+        email.layer.borderWidth = 2
+        
         email.backgroundColor = .yellow
         email.placeholder = "@gmail.com"
         email.layer.cornerRadius = 10
@@ -42,7 +44,7 @@ class LogInView:UIViewController,LogInViewProtocol{
         pass.placeholder = "******"
         pass.layer.cornerRadius = 10
         pass.borderStyle = .roundedRect
-        
+        pass.layer.borderWidth = 2
         pass.isSecureTextEntry = true
         return pass
     }()
@@ -53,6 +55,7 @@ class LogInView:UIViewController,LogInViewProtocol{
         button.backgroundColor = .yellow
         button.layer.cornerRadius = 10
         button.layer.shadowRadius = 2
+        button.layer.borderWidth = 2
         
          return button
      }()
@@ -74,7 +77,7 @@ class LogInView:UIViewController,LogInViewProtocol{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 255, green: 255, blue: 0, alpha: 0.3)
+        view.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.6, alpha: 1.0)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         align()
@@ -131,15 +134,17 @@ class LogInView:UIViewController,LogInViewProtocol{
     }
     
     @objc func signUpButtonTapped(){
+        presenter?.goToSignUp()
         
     }
     
     func alert() {
         let alert = UIAlertController(title: "You don't have a account", message: "Do You Like to Register?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "cancel", style: .cancel,handler: nil))
-        alert.addAction(UIAlertAction(title: "Sign Up", style: .default,handler: {_ in
-            
+        alert.addAction(UIAlertAction(title: "Sign Up", style: .default,handler: { _ in
+            self.presenter?.goToSignUp()
         }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     

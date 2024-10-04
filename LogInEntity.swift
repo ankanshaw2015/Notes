@@ -6,9 +6,13 @@
 //
 
 import Foundation
-struct User{
-    var email:String?
-    var Password:String?
+class User{
+    var email:String
+    var Password:String
+    init(email: String, Password: String) {
+        self.email = email
+        self.Password = Password
+    }
     
 }
 
