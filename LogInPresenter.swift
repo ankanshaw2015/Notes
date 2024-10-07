@@ -51,4 +51,8 @@ class LogInPresenter:LogInPresenterProtocol{
         print("signIn presenter")
     }
     
+    func error(error:String){
+        
+    }
+    
 }

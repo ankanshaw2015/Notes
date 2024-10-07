@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 protocol LogInViewProtocol{
     
@@ -23,14 +24,22 @@ class LogInView:UIViewController,LogInViewProtocol{
         let lebal = UILabel()
         lebal.textAlignment = .center
         lebal.text = "not registered yet?"
-        lebal.font = .systemFont(ofSize: 10, weight: .semibold)
+        lebal.font = .systemFont(ofSize: 14, weight: .semibold)
+        return lebal
+    }()
+    
+    private let logInLabel:UILabel = {
+        let lebal = UILabel()
+        lebal.textAlignment = .center
+        lebal.text = "Login to your account"
+        lebal.font = .systemFont(ofSize: 24, weight: .semibold)
         return lebal
     }()
     
     private let email:UITextField = {
         let email = UITextField()
         email.layer.borderWidth = 2
-        
+        email.autocapitalizationType = .none
         email.backgroundColor = .yellow
         email.placeholder = "@gmail.com"
         email.layer.cornerRadius = 10
@@ -46,6 +55,7 @@ class LogInView:UIViewController,LogInViewProtocol{
         pass.borderStyle = .roundedRect
         pass.layer.borderWidth = 2
         pass.isSecureTextEntry = true
+        pass.autocapitalizationType = .none
         return pass
     }()
     
@@ -67,26 +77,57 @@ class LogInView:UIViewController,LogInViewProtocol{
          return button
      }()
     
-    let logoImageView: UIImageView = {
-          let imageView = UIImageView()
-          imageView.image = UIImage(named: "list") // Replace with your image name
-          imageView.contentMode = .scaleAspectFit
-          imageView.translatesAutoresizingMaskIntoConstraints = false
-          return imageView
-      }()
+    
+    private var logoImageView: LottieAnimationView?
+    
+//    let logoImageView: UIImageView = {
+//          let imageView = UIImageView()
+//          imageView.image = UIImage(named: "list") // Replace with your image name
+//          imageView.contentMode = .scaleAspectFit
+//          imageView.translatesAutoresizingMaskIntoConstraints = false
+//          return imageView
+//      }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.6, alpha: 1.0)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        loadProfile()
         align()
+   
     }
+    
+    func loadProfile(){
+        logoImageView = .init(name: "logIn")
+          
+        logoImageView!.frame = CGRect(x: Int(view.frame.width/2 - 80), y: Int((view.frame.height/2) - 300), width: 150, height: 150)
+          
+          // 3. Set animation content mode
+          
+        logoImageView!.contentMode = .scaleAspectFit
+          
+          // 4. Set animation loop mode
+          
+        logoImageView!.loopMode = .loop
+          
+          // 5. Adjust animation speed
+          
+        logoImageView!.animationSpeed = 1
+          
+          view.addSubview(logoImageView!)
+          
+          // 6. Play animation
+          
+        logoImageView!.play()
+        
+    }
+
     
     private func align(){
           
           // Create a stack view
-          let stackView = UIStackView(arrangedSubviews: [email, password,loginButton])
+          let stackView = UIStackView(arrangedSubviews: [logInLabel,email, password,loginButton])
           stackView.axis = .vertical
           stackView.spacing = 16
           stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,12 +155,12 @@ class LogInView:UIViewController,LogInViewProtocol{
            // stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
-        view.addSubview(logoImageView)
+    //    view.addSubview(logoImageView!)
         NSLayoutConstraint.activate([
-               logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-               logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-               logoImageView.widthAnchor.constraint(equalToConstant: 100), // Adjust width as needed
-               logoImageView.heightAnchor.constraint(equalToConstant: 100) // Adjust height as needed
+               logoImageView!.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+               logoImageView!.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               logoImageView!.widthAnchor.constraint(equalToConstant: 150), // Adjust width as needed
+               logoImageView!.heightAnchor.constraint(equalToConstant: 150) // Adjust height as needed
            ])
         
     }
