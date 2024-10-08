@@ -64,8 +64,8 @@ class SplashViewController: UIViewController {
             guard let window = window else { return }
             
             // Creating the main view controller using the VIPER router
-            let router = NotesRouter.startExecution(email: "user@gmail.com")
-            //let router = LogInRouter.routing()
+            //let router = NotesRouter.startExecution(email: "user@gmail.com")
+            let router = LogInRouter.routing()
             let mainViewController = router.entry
             
             // Set the main view controller as the root of a navigation controller
