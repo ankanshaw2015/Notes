@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 protocol NotesViewProtocol{
     var presenter: NotesPresenterProtocol? { get set }
@@ -15,10 +16,13 @@ protocol NotesViewProtocol{
     func noData(with error: String)
     func profile()
     func about()
-    
+    func recentlyDeleted()
 }
 
 class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDelegate,UITableViewDataSource{
+    
+    var animation = false
+    private var animationView: LottieAnimationView?
     
     var slideMenu:SlideMenuView?
     var isMenuOpen = false
@@ -52,7 +56,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         
          let label = UILabel()
         label.textAlignment = .center
-        label.text = "Note"
+        label.text = ""
         label.font = .systemFont(ofSize: 24, weight: .semibold)
         return label
     }()
@@ -62,6 +66,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
     var presenter: NotesPresenterProtocol?
     
     var myNote :[ NoteInfo] = []
+    var myDeletedNote : [NotesData] = []
     
     var mode = true
     
@@ -73,30 +78,121 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
         view.backgroundColor = UIColor(red: 1.0, green: 0.8, blue: 0.6, alpha: 1.0)
         table.dataSource = self
         table.delegate = self
-        table.reloadData()
-        collectionView.reloadData()
+        loadingButtons()
+        //addTapGesture()
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         setSearchBar()
         text.isHidden = true
+        setupOverlay()
     
         align()
     }
+    
+    
+    private func addTapGesture() {
+           let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissDrawer))
+           self.view.addGestureRecognizer(tapGesture)
+       }
+       
+       @objc private func dismissDrawer() {
+           if isMenuOpen {
+               UIView.animate(withDuration: 0.3) {
+                   self.slideMenu?.view.frame = CGRect(x: 0, y: 0, width: -300, height: self.view.frame.height)// Move off-screen
+               }
+               isMenuOpen = false
+           }
+       }
  
     override func viewDidAppear(_ animated: Bool) {
+    
+        
+        if animation {
+            loadSaveAnimation()
+        }
+        
+    }
+    
+    func loadingButtons(){
         addButton = UIBarButtonItem(image: UIImage(systemName: "note.text.badge.plus"), style: .plain, target: self, action: #selector(didTapAdd))
 
-        // addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
+               // addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
 
-        let gridIcon = UIImage(named: "grid")
+               let gridIcon = UIImage(named: "grid")
+               
+               button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
+               
+               slideButton = UIBarButtonItem(image: UIImage(systemName: "list.star"), style: .plain, target: self, action: #selector(slideButtonTapped))
         
-        button = UIBarButtonItem(image: gridIcon, style: .plain, target: self, action: #selector(toggle))
-        
-        slideButton = UIBarButtonItem(image: UIImage(systemName: "list.star"), style: .plain, target: self, action: #selector(slideButtonTapped))
- 
-        navigationItem.rightBarButtonItems = [addButton, button,slideButton]
-        print("buttons are loading")
+               navigationItem.rightBarButtonItems = [addButton, button,slideButton]
+               print("buttons are loading")
     }
+    
+    func loadSaveAnimation(){
+        animationView = .init(name: "saved")
+          
+        animationView!.frame = CGRect(x: Int(view.frame.width/2 - 80), y: Int((view.frame.height/2) - 80), width: 150, height: 150)
+          
+          // 3. Set animation content mode
+          
+          animationView!.contentMode = .scaleAspectFit
+          
+          // 4. Set animation loop mode
+          
+        animationView!.loopMode = .playOnce
+          
+          // 5. Adjust animation speed
+          
+        animationView!.animationSpeed = 1.5
+          
+          view.addSubview(animationView!)
+          
+          // 6. Play animation
+          
+        animationView!.play{completed in
+            self.animationView!.removeFromSuperview()
+        }
+        
+        animation = false
+    }
+    
+    func loadDeleteAnimation(){
+        animationView = .init(name: "deleteButton")
+          
+        animationView!.frame = CGRect(x: Int(view.frame.width/2 - 80), y: Int((view.frame.height/2) - 80), width: 150, height: 150)
+          
+          // 3. Set animation content mode
+          
+          animationView!.contentMode = .scaleAspectFit
+          
+          // 4. Set animation loop mode
+          
+        animationView!.loopMode = .playOnce
+          
+          // 5. Adjust animation speed
+          
+        animationView!.animationSpeed = 1.5
+          
+          view.addSubview(animationView!)
+          
+          // 6. Play animation
+          
+        animationView!.play{completed in
+            self.animationView!.removeFromSuperview()
+        }
+        
+    }
+    
+    private let overlayView = UIView()
+    private func setupOverlay() {
+           // Configure the overlay view
+           overlayView.frame = self.view.bounds
+           overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.0) // Semi-transparent
+           overlayView.isHidden = true // Start hidden
+           overlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(slideButtonTapped)))
+           self.view.addSubview(overlayView)
+       }
     
     @objc func slideButtonTapped(){
 
@@ -110,9 +206,10 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
             })
             slideMenu.didMove(toParent: self)
             isMenuOpen = true
+            self.overlayView.isHidden = false
         }
         else{
-           
+            self.overlayView.isHidden = true
             UIView.animate(withDuration: 0.8, delay: 0.3, options: [.curveEaseInOut], animations: {
 
                 self.slideMenu?.view.alpha = 0.0
@@ -132,49 +229,97 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
     }
     
     func about(){
+        delete = false
         table.isHidden = true
         collectionView.isHidden = true
         button.isHidden = true
         addButton.isHidden = true
-        //.backgroundColor = .systemBlue
+       
         searchBar.isHidden = true
         text.isHidden = false
         navigationItem.leftBarButtonItem = slideButton
         isMenuOpen = false
         text.text = constant().texts
-        text.backgroundColor =  UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 0.6)
-        text.layer.cornerRadius = 18
-        text.font = .systemFont(ofSize: 26, weight: .light)
+                text.backgroundColor =  UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1)
+                text.layer.cornerRadius = 18
+        text.font = .systemFont(ofSize: 16, weight: .light)
+        
         UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
             self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
         })
     }
     
     func profile(){
-        table.isHidden = false
+        delete = false
+        table.isHidden = true
+        searchBar.isHidden = false
+        if myNote.isEmpty || myNote[0].noteTitle == nil{
+            collectionView.isHidden = true
+            collectionView.reloadData()
+            label.isHidden = false
+        }
+        else{
+            collectionView.isHidden = false
+            collectionView.reloadData()
+        }
        // collectionView.isHidden = false
         button.isHidden = false
         addButton.isHidden = false
-        view.backgroundColor = .yellow
+//        if myNote.isEmpty{
+//            label.isHidden = false
+//        }
+        
         searchBar.isHidden = false
         text.isHidden = true
         isMenuOpen = false
+        table.reloadData()
+       // collectionView.reloadData()
         UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
             self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
           
         })
+        navigationItem.leftBarButtonItem?.isHidden = false
+       // print(myNote[0].noteTitle)
     }
+    
+    var delete = false
+    
+    func recentlyDeleted(){
+        text.isHidden = true
+        searchBar.isHidden = true
+        delete = true
+        isMenuOpen = false
+        collectionView.isHidden = true
+        label.isHidden = true
+        navigationItem.rightBarButtonItem?.isHidden = true
+        navigationItem.leftBarButtonItem = slideButton
+        button.isHidden = true
+        table.isHidden = false
+        table.reloadData()
+        UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
+            self.slideMenu!.view.frame = CGRect(x: -250, y: 0, width: 0, height: 0)
+        })
+       // print(myDeletedNote[myDeletedNote.count - 1] , myDeletedNote.count)
+    }
+    
+    
+    
 
     
     @objc func toggle() {
             if table.isHidden {
+              
                 table.isHidden = false
                 collectionView.isHidden = true
+                table.reloadData()
                 navigationItem.rightBarButtonItems![1].image = UIImage(named: "list")
                 
             } else {
-                table.isHidden = true
+              
                 collectionView.isHidden = false
+                table.isHidden = true
+               // collectionView.isHidden = false
+                collectionView.reloadData()
                 navigationItem.rightBarButtonItems![1].image = UIImage(named: "grid")
             }
         }
@@ -214,7 +359,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
            
            text.translatesAutoresizingMaskIntoConstraints = false
            text.backgroundColor = .systemBlue
-           text.text = "achha app hai"
+          // text.text = "achha app hai"
            view.addSubview(text)
            NSLayoutConstraint.activate([
             text.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -231,7 +376,7 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
             self.label.isHidden = true
             self.table.reloadData()
             self.collectionView.reloadData()
-            
+            collectionView.isHidden = false
            
         }
         
@@ -250,35 +395,61 @@ class MyNotesViewController: UIViewController,NotesViewProtocol,UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isSearch ? filteredNotes.count : myNote.count
+        return delete ? myDeletedNote.count : isSearch ? filteredNotes.count : myNote.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         var content = cell.defaultContentConfiguration()
-        content.text = isSearch ? filteredNotes[indexPath.row].noteTitle : myNote[indexPath.row].noteTitle
-        content.secondaryText =  isSearch ? filteredNotes[indexPath.row].noteData : myNote[indexPath.row].noteData
+        content.text = delete ? myDeletedNote[indexPath.row].noteTitle : isSearch ? filteredNotes[indexPath.row].noteTitle : myNote[indexPath.row].noteTitle
+        content.secondaryText = delete ? myDeletedNote[indexPath.row].noteData : isSearch ? filteredNotes[indexPath.row].noteData : myNote[indexPath.row].noteData
         cell.contentConfiguration = content
         cell.contentView.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1.0)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if delete{
+            let sheet  = UIAlertController(title: "Do You Want to Restore?", message: nil, preferredStyle: .actionSheet)
+                   sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                   sheet.addAction(UIAlertAction(title: "Restore", style: .default, handler: { _ in
+                       self.presenter?.interactor?.myNote = self.myDeletedNote[indexPath.row]
+                       self.myDeletedNote.remove(at: indexPath.row)
+                       self.presenter?.viewDidLoad()
+                       //self.myDeletedNote.remove(at: indexPath.row)
+                       
+                           }
+
+                   ))
+                   present(sheet, animated: true)
+        }
+        
         presenter?.detailNote(myNote[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: "delete", handler: { [self]action,view,handler in
             let note = self.myNote[indexPath.row]
-            self.presenter?.deleteNote(note)
+           // var noteData:NotesData
+            if !delete{
+                let noteData = NotesData(noteTitle: note.noteTitle! , noteData: note.noteData!)
+                print(noteData.noteData)
+                print(note.noteData!)
+                myDeletedNote.insert(noteData, at: myDeletedNote.count)
+                presenter?.deleteNote(note)
+            }
+            
+            else{
+                myDeletedNote.remove(at: indexPath.row )
+                table.reloadData()
+            }
+           print(delete)
+            
         }
         )
         let confure = UISwipeActionsConfiguration(actions: [action])
         return confure
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(100)
     }
     
 
@@ -296,7 +467,7 @@ extension MyNotesViewController:UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! noteCell
-       let noteItem = isSearch ? filteredNotes[indexPath.item] : myNote[indexPath.item]
+        let noteItem = isSearch ? filteredNotes[indexPath.item] : myNote[indexPath.item]
         cell.note = noteItem
         cell.backgroundColor = UIColor(red: 1.0, green: 0.647, blue: 0.0, alpha: 1.0)
         cell.button.tag = indexPath.item // Tag the button with the index
@@ -305,10 +476,17 @@ extension MyNotesViewController:UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @objc func deleteButtonTapped(_ sender: UIButton) {
-          let index = sender.tag // Get the index from the button's tag
+          let index = sender.tag
+        if !delete{
+            let noteData = NotesData(noteTitle:myNote[index].noteTitle! ,
+                                     noteData: myNote[index].noteData!)
+            myDeletedNote.append(noteData)
+        }
         presenter?.deleteNote(myNote[index])
-          // Optionally, adjust tags for remaining buttons
-          collectionView.reloadData() // Or update tags manually
+        print(myDeletedNote.count)
+        print(myDeletedNote[myDeletedNote.count - 1].noteTitle, "data")
+        loadDeleteAnimation()
+          collectionView.reloadData()
       }
     
     

@@ -4,7 +4,7 @@
         <attribute name="noteData" optional="YES" attributeType="String"/>
         <attribute name="noteTitle" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="NoteUser" representedClassName="NoteUser" syncable="YES" codeGenerationType="class">
+    <entity name="NoteUser" representedClassName="NoteUser" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="password" optional="YES" attributeType="String"/>
     </entity>

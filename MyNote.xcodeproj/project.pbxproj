@@ -29,6 +29,13 @@
 		043B7FE82CA5A1E90087A1EB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B7FE72CA5A1E90087A1EB /* SceneDelegate.swift */; };
 		043B7FEB2CA5A4CC0087A1EB /* NoteInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B7FE92CA5A4CC0087A1EB /* NoteInfo+CoreDataClass.swift */; };
 		043B7FEC2CA5A4CC0087A1EB /* NoteInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B7FEA2CA5A4CC0087A1EB /* NoteInfo+CoreDataProperties.swift */; };
+		044DD4252CB161CF00BCC1B3 /* saved.json in Resources */ = {isa = PBXBuildFile; fileRef = 044DD4242CB161CE00BCC1B3 /* saved.json */; };
+		044DD4272CB1807D00BCC1B3 /* deleteButton.json in Resources */ = {isa = PBXBuildFile; fileRef = 044DD4262CB1807D00BCC1B3 /* deleteButton.json */; };
+		045A42312CB1574F0030F630 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 045A42302CB1574F0030F630 /* Lottie */; };
+		045A42342CB157950030F630 /* note.json in Resources */ = {isa = PBXBuildFile; fileRef = 045A42332CB157950030F630 /* note.json */; };
+		04707AB32CB2939F007E39FA /* userIcon.json in Resources */ = {isa = PBXBuildFile; fileRef = 04707AB22CB2939F007E39FA /* userIcon.json */; };
+		04707AB52CB2A1BB007E39FA /* logIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 04707AB42CB2A1BB007E39FA /* logIn.json */; };
+		04707AB72CB2A1DE007E39FA /* signUp.json in Resources */ = {isa = PBXBuildFile; fileRef = 04707AB62CB2A1DE007E39FA /* signUp.json */; };
 		0477208B2CABC37300780A31 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477208A2CABC37300780A31 /* LogInView.swift */; };
 		0477208D2CABC38D00780A31 /* LogInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477208C2CABC38D00780A31 /* LogInPresenter.swift */; };
 		0477208F2CABC39F00780A31 /* LogInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477208E2CABC39F00780A31 /* LogInInteractor.swift */; };
@@ -36,6 +43,9 @@
 		047720932CABE29700780A31 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047720922CABE29700780A31 /* SignUpView.swift */; };
 		047720962CAC047100780A31 /* LogInEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047720952CAC047100780A31 /* LogInEntity.swift */; };
 		048429762CAEE9C400CA6AC7 /* MainNoteExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048429752CAEE9C400CA6AC7 /* MainNoteExtentions.swift */; };
+		0486CF5B2CAFD4F2002CD39A /* NoteUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486CF592CAFD4F2002CD39A /* NoteUser+CoreDataClass.swift */; };
+		0486CF5C2CAFD4F2002CD39A /* NoteUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486CF5A2CAFD4F2002CD39A /* NoteUser+CoreDataProperties.swift */; };
+		0486CF5E2CB00AF7002CD39A /* SplaceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486CF5D2CB00AF7002CD39A /* SplaceScreen.swift */; };
 		04F271F92CAD681100CE5428 /* SlideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F271F82CAD681100CE5428 /* SlideMenu.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +74,12 @@
 		043B7FE72CA5A1E90087A1EB /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		043B7FE92CA5A4CC0087A1EB /* NoteInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		043B7FEA2CA5A4CC0087A1EB /* NoteInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		044DD4242CB161CE00BCC1B3 /* saved.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = saved.json; sourceTree = "<group>"; };
+		044DD4262CB1807D00BCC1B3 /* deleteButton.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = deleteButton.json; sourceTree = "<group>"; };
+		045A42332CB157950030F630 /* note.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = note.json; sourceTree = "<group>"; };
+		04707AB22CB2939F007E39FA /* userIcon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = userIcon.json; sourceTree = "<group>"; };
+		04707AB42CB2A1BB007E39FA /* logIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logIn.json; sourceTree = "<group>"; };
+		04707AB62CB2A1DE007E39FA /* signUp.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = signUp.json; sourceTree = "<group>"; };
 		0477208A2CABC37300780A31 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		0477208C2CABC38D00780A31 /* LogInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInPresenter.swift; sourceTree = "<group>"; };
 		0477208E2CABC39F00780A31 /* LogInInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInInteractor.swift; sourceTree = "<group>"; };
@@ -71,6 +87,9 @@
 		047720922CABE29700780A31 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		047720952CAC047100780A31 /* LogInEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInEntity.swift; sourceTree = "<group>"; };
 		048429752CAEE9C400CA6AC7 /* MainNoteExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoteExtentions.swift; sourceTree = "<group>"; };
+		0486CF592CAFD4F2002CD39A /* NoteUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteUser+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0486CF5A2CAFD4F2002CD39A /* NoteUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0486CF5D2CB00AF7002CD39A /* SplaceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplaceScreen.swift; sourceTree = "<group>"; };
 		04F271F82CAD681100CE5428 /* SlideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				045A42312CB1574F0030F630 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +125,7 @@
 		043B7FAE2CA59FE70087A1EB /* MyNote */ = {
 			isa = PBXGroup;
 			children = (
+				045A42322CB157820030F630 /* Animations */,
 				043B7FEE2CA5AF2F0087A1EB /* Delegates */,
 				047720882CABC2BA00780A31 /* LogIn&SignUp */,
 				043B7FDA2CA5A1170087A1EB /* MainNote */,
@@ -161,6 +182,8 @@
 			children = (
 				043B7FE92CA5A4CC0087A1EB /* NoteInfo+CoreDataClass.swift */,
 				043B7FEA2CA5A4CC0087A1EB /* NoteInfo+CoreDataProperties.swift */,
+				0486CF592CAFD4F2002CD39A /* NoteUser+CoreDataClass.swift */,
+				0486CF5A2CAFD4F2002CD39A /* NoteUser+CoreDataProperties.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -171,8 +194,22 @@
 				043B7FAF2CA59FE70087A1EB /* AppDelegate.swift */,
 				043B7FE72CA5A1E90087A1EB /* SceneDelegate.swift */,
 				043B7FB52CA59FE70087A1EB /* Main.storyboard */,
+				0486CF5D2CB00AF7002CD39A /* SplaceScreen.swift */,
 			);
 			name = Delegates;
+			sourceTree = "<group>";
+		};
+		045A42322CB157820030F630 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				045A42332CB157950030F630 /* note.json */,
+				044DD4242CB161CE00BCC1B3 /* saved.json */,
+				044DD4262CB1807D00BCC1B3 /* deleteButton.json */,
+				04707AB22CB2939F007E39FA /* userIcon.json */,
+				04707AB42CB2A1BB007E39FA /* logIn.json */,
+				04707AB62CB2A1DE007E39FA /* signUp.json */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 		047720882CABC2BA00780A31 /* LogIn&SignUp */ = {
@@ -205,6 +242,9 @@
 			dependencies = (
 			);
 			name = MyNote;
+			packageProductDependencies = (
+				045A42302CB1574F0030F630 /* Lottie */,
+			);
 			productName = MyNote;
 			productReference = 043B7FAC2CA59FE70087A1EB /* MyNote.app */;
 			productType = "com.apple.product-type.application";
@@ -233,6 +273,9 @@
 				Base,
 			);
 			mainGroup = 043B7FA32CA59FE70087A1EB;
+			packageReferences = (
+				045A422F2CB1574F0030F630 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 043B7FAD2CA59FE70087A1EB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -249,7 +292,13 @@
 			files = (
 				043B7FBF2CA59FE90087A1EB /* LaunchScreen.storyboard in Resources */,
 				043B7FBC2CA59FE90087A1EB /* Assets.xcassets in Resources */,
+				045A42342CB157950030F630 /* note.json in Resources */,
 				043B7FB72CA59FE70087A1EB /* Main.storyboard in Resources */,
+				04707AB72CB2A1DE007E39FA /* signUp.json in Resources */,
+				044DD4252CB161CF00BCC1B3 /* saved.json in Resources */,
+				044DD4272CB1807D00BCC1B3 /* deleteButton.json in Resources */,
+				04707AB52CB2A1BB007E39FA /* logIn.json in Resources */,
+				04707AB32CB2939F007E39FA /* userIcon.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,10 +317,12 @@
 				043B7FD02CA5A08E0087A1EB /* CompleteNoteEntity.swift in Sources */,
 				043B7FD62CA5A0B40087A1EB /* NewNoteView.swift in Sources */,
 				043B7FE32CA5A16B0087A1EB /* NotesEntity.swift in Sources */,
+				0486CF5B2CAFD4F2002CD39A /* NoteUser+CoreDataClass.swift in Sources */,
 				043B7FEB2CA5A4CC0087A1EB /* NoteInfo+CoreDataClass.swift in Sources */,
 				043B7FE42CA5A16B0087A1EB /* NotesView.swift in Sources */,
 				043B7FCE2CA5A08E0087A1EB /* CompleteNoteRouter.swift in Sources */,
 				0477208F2CABC39F00780A31 /* LogInInteractor.swift in Sources */,
+				0486CF5C2CAFD4F2002CD39A /* NoteUser+CoreDataProperties.swift in Sources */,
 				0477208B2CABC37300780A31 /* LogInView.swift in Sources */,
 				043B7FCF2CA5A08E0087A1EB /* CompleteNoteView.swift in Sources */,
 				043B7FB02CA59FE70087A1EB /* AppDelegate.swift in Sources */,
@@ -281,6 +332,7 @@
 				043B7FE12CA5A16B0087A1EB /* NotesPresenter.swift in Sources */,
 				04F271F92CAD681100CE5428 /* SlideMenu.swift in Sources */,
 				043B7FE82CA5A1E90087A1EB /* SceneDelegate.swift in Sources */,
+				0486CF5E2CB00AF7002CD39A /* SplaceScreen.swift in Sources */,
 				0477208D2CABC38D00780A31 /* LogInPresenter.swift in Sources */,
 				047720912CABC3BB00780A31 /* LogInRouter.swift in Sources */,
 				043B7FD92CA5A0B40087A1EB /* NewNoteRouter.swift in Sources */,
@@ -502,6 +554,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		045A422F2CB1574F0030F630 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		045A42302CB1574F0030F630 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 045A422F2CB1574F0030F630 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		043B7FB82CA59FE70087A1EB /* MyNote.xcdatamodeld */ = {

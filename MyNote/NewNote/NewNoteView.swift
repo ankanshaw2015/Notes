@@ -25,7 +25,7 @@ class NewNoteViewController:UIViewController,NewNoteViewProtocol{
          
          let Field = UITextField()
          Field.placeholder = "Give A Title"
-        Field.autocapitalizationType = .none
+       // Field.autocapitalizationType = .none
          Field.layer.borderWidth = 1
         Field.layer.borderColor = UIColor.gray.cgColor
          Field.leftViewMode = .always

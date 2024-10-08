@@ -24,7 +24,7 @@ class NewNotePresenter:NewNotePresenterProtocol{
     var router: NewNoteRouterProtocol?
     
     func addNewData(_ noteTitle: String, _ noteInfo: String) {
-        let notes = NotesData(noteTitle: noteTitle, noteInfo: noteInfo)
+        let notes = NotesData(noteTitle: noteTitle, noteData: noteInfo)
        
         router?.goToNoteView(notes)
         

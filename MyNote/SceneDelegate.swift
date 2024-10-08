@@ -14,19 +14,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        window = UIWindow(windowScene: windowScene)
+//
+//        let router = NotesRouter.startExecution(email: "user@gmail.com")
+//        //let router = LogInRouter.routing()
+//        let initialViewControler = router.entry!
+//
+//        let navigation = UINavigationController()
+//        navigation.viewControllers = [initialViewControler]
+//
+//        window?.rootViewController = navigation
+//        window?.makeKeyAndVisible()
+//        window?.backgroundColor = .systemBackground
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        
-       // let router = NotesRouter.startExecution(email: "user@gmail.com")
-        let router = LogInRouter.routing()
-        let initialViewControler = router.entry!
-        
-        let navigation = UINavigationController()
-        navigation.viewControllers = [initialViewControler]
-        
-        window?.rootViewController = navigation
-        window?.makeKeyAndVisible()
-        window?.backgroundColor = .systemBackground
+                let window = UIWindow(windowScene: windowScene)
+                self.window = window
+                
+                let splashViewController = SplashViewController()
+                window.rootViewController = splashViewController
+                window.makeKeyAndVisible()
+
+                // After a delay, transition to the MainViewController
+                splashViewController.transitionToMainView(window: window)
       
         
     }

@@ -24,6 +24,7 @@ protocol NotesPresenterProtocol{
     func goToSignUp()
     func profileView()
     func aboutView()
+    func recentDelete()
 }
 
 class NotesPresenter: NotesPresenterProtocol{
@@ -78,6 +79,11 @@ class NotesPresenter: NotesPresenterProtocol{
     
     func aboutView() {
         view?.about()
+    }
+    
+    func recentDelete() {
+        view?.recentlyDeleted()
+                print("recent pre")
     }
     
 }

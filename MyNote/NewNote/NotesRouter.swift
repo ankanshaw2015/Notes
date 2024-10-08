@@ -74,6 +74,7 @@ class NotesRouter:NotesRouterProtocol{
         self.presenter?.interactor?.myNote = notes
         self.presenter?.viewDidLoad()
         print("back to note view")
+        entry?.animation = true
         
     }
     func goToLogIn() {

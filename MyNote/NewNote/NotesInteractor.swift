@@ -36,7 +36,7 @@ class NotesInteractor: NotesInteractorProtocol{
             //            id.userNotes.append(note)
             let note = NoteInfo(context: self.context)
             note.noteTitle = myNote?.noteTitle
-            note.noteData = myNote?.noteInfo
+            note.noteData = myNote?.noteData
             
             do{
                 try self.context.save()
